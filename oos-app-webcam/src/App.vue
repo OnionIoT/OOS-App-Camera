@@ -4,13 +4,27 @@
       <section class="navbar-section">
       </section>
       <section class="navbar-section my-1">
-        <a @click="startStream" class="btn mr-1" :disabled="streamButtonDisabled">{{streamButtonText}}</a>
+        <a @click="startStream" class="btn mr-1" :disabled="!bReady">{{streamButtonText}}</a>
       </section>
     </header>
-    <div class="bg">
+    <div class="container grid-lg">
       <!-- <img id="stream" src="streamUrl" onerror="this.src='./apps/onion-webcam/not_available.jpg'"> -->
-      <div class="vertical center-justified layout center">
-        <img class="centered" :src="streamUrl" onerror="static/img/not_available.jpg">
+      <div class="card my-2">
+        <div class="card-body">
+          <img class="centered" :src="streamUrl" onerror="static/img/not_available.jpg">
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title h5">...</div>
+          <div class="card-subtitle text-gray">...</div>
+        </div>
+        <div class="card-body">
+          HELLO THERE
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-primary">...</button>
+        </div>
       </div>
     </div>
   </div>
@@ -64,7 +78,7 @@ export default {
         this.bStreaming = !result
       }
       // TODO: add handling for STOP and START commands
-    }
+    }.bind(this)
     OnionCDK.onInit = function () {
       // check if streaming service is running
       OnionCDK.service('mjpg-streamer', 'list')
@@ -77,11 +91,6 @@ export default {
     },
     streamButtonText () {
       return (this.bStreaming ? 'Stop Stream' : 'Start Stream')
-    },
-    streamButtonDisabled () {
-      // TODO: this needs to be updated so that button reacts based on changes in bReady
-      // return !this.bReady
-      return false
     }
   }
 }
