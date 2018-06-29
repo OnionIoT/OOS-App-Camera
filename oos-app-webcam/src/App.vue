@@ -1,6 +1,49 @@
 <template>
-  <div class="bg">
-    <header class="navbar">
+  <div class="container bg">
+
+
+
+    <div class="card">
+      <div class="card-image">
+        <img :src="streamUrl" onerror="static/img/not_available.jpg" class="stream img-responsive">
+      </div>
+      <div class="card-header">
+        <div class="card-title h5">Live Stream</div>
+        <!-- <div class="card-subtitle text-gray">...</div> -->
+      </div>
+      <!-- <div class="card-body">
+        ...
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary">...</button>
+      </div> -->
+    </div>
+
+
+    <div class="card">
+      <!-- <div class="card-image">
+        <img :src="streamUrl" onerror="static/img/not_available.jpg" class="stream img-responsive">
+      </div> -->
+      <div class="card-header">
+        <div class="card-title h5">Timelapse</div>
+        <div class="card-subtitle text-gray">Periodic snapshots will be sent directly to your Dropbox</div>
+
+      </div>
+      <div class="card-body">
+        <div class="input-group">
+          <!-- <span class="input-group-addon"><a>How to get the Token?</a></span> -->
+          <input type="text" class="form-input" placeholder="Dropbox App Token">
+          <button class="btn btn-primary input-group-btn" >Save</button>
+        </div>
+        <div class="card-subtitle text-gray"><a>How to get the App Token?</a></div>
+      </div>
+      <div class="card-footer">
+        <button class="btn btn-primary btn-block tooltip tooltip-bottom" data-tooltip="Recording">Start Recording</button>
+      </div>
+    </div>
+
+
+    <!-- <header class="navbar">
       <section class="navbar-section">
       </section>
       <section class="navbar-section my-1">
@@ -8,7 +51,6 @@
       </section>
     </header>
     <div class="container grid-lg">
-      <!-- <img id="stream" src="streamUrl" onerror="this.src='./apps/onion-webcam/not_available.jpg'"> -->
       <div class="card my-2">
         <div class="card-body">
           <img class="centered" :src="streamUrl" onerror="static/img/not_available.jpg">
@@ -26,7 +68,7 @@
           <button class="btn btn-primary">...</button>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -110,7 +152,23 @@ body {
   background-color: #9b59b6;
 }
 .bg {
-  background-color: #95a5a6;
+  /* background-color: #95a5a6; */
   height:100%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stream {
+  width: 100%;
+}
+
+.card {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 800px;
 }
 </style>
