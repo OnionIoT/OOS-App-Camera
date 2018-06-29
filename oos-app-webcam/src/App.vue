@@ -32,8 +32,8 @@
       <div class="card-body">
         <div class="input-group">
           <!-- <span class="input-group-addon"><a>How to get the Token?</a></span> -->
-          <input type="text" class="form-input" placeholder="Dropbox App Token">
-          <button class="btn btn-primary input-group-btn" >Save</button>
+          <input type="text" class="form-input" placeholder="Dropbox App Token" >
+          <button class="btn btn-primary input-group-btn" @click="saveToken">Save</button>
         </div>
         <div class="card-subtitle text-gray"><a>How to get the App Token?</a></div>
       </div>
@@ -85,12 +85,14 @@ export default {
     return {
       port: 8080,
       bStreaming: false,
-      bReady: false
+      bReady: false,
+      token: ""
     }
   },
   methods: {
     created () {
       console.log(window.location.hostname)
+      this.startStream()
     },
     startStream () {
       if (this.bStreaming) {
@@ -102,6 +104,10 @@ export default {
       }
       // TODO: need to find a place to configure mjpg-streamer
       // OnionCDK.sendCmd('getBatteryLevels', [])
+    },
+    saveToken () {
+      OnionCDK.sendCmd('echo', ['test', '>', '/tmp/test.txt'])
+      console.log(this.token)
     }
   },
   mounted () {
