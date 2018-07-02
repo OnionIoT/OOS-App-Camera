@@ -28,13 +28,16 @@
         <div class="input-group">
           <!-- <span class="input-group-addon"><a>How to get the Token?</a></span> -->
           <input type="text" class="form-input" v-model="token" placeholder="Dropbox App Token" >
-          <button class="btn btn-primary input-group-btn" @click="saveToken">Save</button>
+          <button class="btn btn-primary input-group-btn"
+          :class="{loading: isLoading}"
+          @click="saveToken">Save</button>
         </div>
         <div class="card-subtitle text-gray"><a>How to get the App Token?</a></div>
       </div>
       <div class="card-footer">
         <button class="btn btn-primary btn-block"
         @click="toggleRecording"
+        :class="{loading: isLoading}"
         >{{bTimelapse?'Stop Recording':'Start Recording'}}</button>
       </div>
     </div>
@@ -82,6 +85,7 @@ export default {
       bStreaming: false,
       bTimelapse: false,
       bReady: false,
+      isLoading: true,
       token: ''
     }
   },
@@ -102,9 +106,11 @@ export default {
       // OnionCDK.sendCmd('getBatteryLevels', [])
     },
     saveToken () {
+      this.isLoading = true
       OnionCDK.sendCmd('/www/apps/oos-app-webcam/save-token.sh', [this.token])
     },
     toggleRecording () {
+      this.isLoading = true
       if (this.bTimelapse) {
         OnionCDK.service('oos-app-timelapse', 'stop')
       } else {
@@ -115,6 +121,7 @@ export default {
   mounted () {
     OnionCDK.onService = function (name, command, result) {
       console.log(name, command, result)
+      this.isLoading = false
       switch (name) {
         case 'oos-app-timelapse':
           if (command === 'list' && typeof result !== 'undefined') {
@@ -144,6 +151,7 @@ export default {
     }.bind(this)
 
     OnionCDK.onCmd = function (command, result) {
+      this.isLoading = false
       switch (command) {
         case '/www/apps/oos-app-webcam/save-token.sh':
           OnionCDK.sendToast('Token Saved')
