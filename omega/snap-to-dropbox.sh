@@ -5,7 +5,7 @@
 
 #DATE=`date +"%Y-%m-%d_%H%M%S"`
 DATE=`date +"%s"`
-TOKEN=`cat token.txt`
+TOKEN=`cat /www/apps/oos-app-webcam/token.txt`
 
 
 FNAME=$DATE.jpg
@@ -25,6 +25,3 @@ curl -X POST https://content.dropboxapi.com/2/files/upload \
 
 
 rm $FPATH
-
-
-

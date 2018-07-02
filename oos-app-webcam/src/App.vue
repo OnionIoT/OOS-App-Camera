@@ -32,7 +32,7 @@
       <div class="card-body">
         <div class="input-group">
           <!-- <span class="input-group-addon"><a>How to get the Token?</a></span> -->
-          <input type="text" class="form-input" placeholder="Dropbox App Token" >
+          <input type="text" class="form-input" v-model="token" placeholder="Dropbox App Token" >
           <button class="btn btn-primary input-group-btn" @click="saveToken">Save</button>
         </div>
         <div class="card-subtitle text-gray"><a>How to get the App Token?</a></div>
@@ -86,7 +86,7 @@ export default {
       port: 8080,
       bStreaming: false,
       bReady: false,
-      token: ""
+      token: ''
     }
   },
   methods: {
@@ -106,12 +106,10 @@ export default {
       // OnionCDK.sendCmd('getBatteryLevels', [])
     },
     saveToken () {
-      OnionCDK.sendCmd('echo', ['test', '>', '/tmp/test.txt'])
-      console.log(this.token)
+      OnionCDK.sendCmd('/www/apps/oos-app-webcam/save-token.sh', [this.token])
     }
   },
   mounted () {
-    console.log(window.location.hostname)
     OnionCDK.onService = function (name, command, result) {
       console.log(name, command, result)
       if (command === 'list' && typeof result !== 'undefined') {
@@ -127,6 +125,19 @@ export default {
       }
       // TODO: add handling for STOP and START commands
     }.bind(this)
+
+    OnionCDK.onCmd = function (command, result) {
+      console.log(command, result)
+      switch (command) {
+        case '/www/apps/oos-app-webcam/save-token.sh':
+          OnionCDK.sendToast('Token Saved')
+          break
+        default:
+          break
+
+      }
+    }
+
     OnionCDK.onInit = function () {
       // check if streaming service is running
       OnionCDK.service('mjpg-streamer', 'list')
