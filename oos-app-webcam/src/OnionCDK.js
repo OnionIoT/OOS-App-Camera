@@ -53,6 +53,11 @@ export default {
       params: params
     })
   },
+  sendToast: function (message) {
+    this.sendEvent('Onion.CDK.Toast', {
+      message: message
+    })
+  },
   processMessage: function (e) {
     if (e.data.event === 'Onion.CDK.Init') {
       var appUid = e.data.appUid
