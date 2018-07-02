@@ -1,8 +1,5 @@
 <template>
   <div class="container bg">
-
-
-
     <div class="card">
       <div class="card-image">
         <img :src="streamUrl" onerror="static/img/not_available.jpg" class="stream img-responsive">
@@ -18,14 +15,12 @@
         <button class="btn btn-primary">...</button>
       </div> -->
     </div>
-
-
     <div class="card">
       <!-- <div class="card-image">
         <img :src="streamUrl" onerror="static/img/not_available.jpg" class="stream img-responsive">
       </div> -->
       <div class="card-header">
-        <div class="card-title h5">Timelapse</div>
+        <div class="card-title h5">Timelapse {{bTimelapse?'(Recording)':''}}</div>
         <div class="card-subtitle text-gray">Periodic snapshots will be sent directly to your Dropbox</div>
 
       </div>
@@ -38,11 +33,11 @@
         <div class="card-subtitle text-gray"><a>How to get the App Token?</a></div>
       </div>
       <div class="card-footer">
-        <button class="btn btn-primary btn-block tooltip tooltip-bottom" data-tooltip="Recording">Start Recording</button>
+        <button class="btn btn-primary btn-block"
+        @click="toggleRecording"
+        >{{bTimelapse?'Stop Recording':'Start Recording'}}</button>
       </div>
     </div>
-
-
     <!-- <header class="navbar">
       <section class="navbar-section">
       </section>
@@ -85,6 +80,7 @@ export default {
     return {
       port: 8080,
       bStreaming: false,
+      bTimelapse: false,
       bReady: false,
       token: ''
     }
@@ -107,40 +103,64 @@ export default {
     },
     saveToken () {
       OnionCDK.sendCmd('/www/apps/oos-app-webcam/save-token.sh', [this.token])
+    },
+    toggleRecording () {
+      if (this.bTimelapse) {
+        OnionCDK.service('oos-app-timelapse', 'stop')
+      } else {
+        OnionCDK.service('oos-app-timelapse', 'start')
+      }
     }
   },
   mounted () {
     OnionCDK.onService = function (name, command, result) {
       console.log(name, command, result)
-      if (command === 'list' && typeof result !== 'undefined') {
-        console.log('list: setting bStreaming to ' + result)
-        this.bStreaming = result
-        this.bReady = true
-      } else if (command === 'start' && typeof result !== 'undefined') {
-        console.log('start: setting bStreaming to ' + result)
-        this.bStreaming = result
-      } else if (command === 'stop' && typeof result !== 'undefined') {
-        console.log('stop: setting bStreaming to ' + result)
-        this.bStreaming = !result
+      switch (name) {
+        case 'oos-app-timelapse':
+          if (command === 'list' && typeof result !== 'undefined') {
+            this.bTimelapse = result
+          } else if (command === 'start' && typeof result !== 'undefined') {
+            this.bTimelapse = result
+          } else if (command === 'stop' && typeof result !== 'undefined') {
+            this.bTimelapse = !result
+          }
+          break
+        case 'mjpg-streamer':
+          if (command === 'list' && typeof result !== 'undefined') {
+            this.bStreaming = result
+            this.bReady = true
+          } else if (command === 'start' && typeof result !== 'undefined') {
+            this.bStreaming = result
+          } else if (command === 'stop' && typeof result !== 'undefined') {
+            this.bStreaming = !result
+          }
+          // TODO: add handling for STOP and START commands
+          break
+        default:
+          break
       }
-      // TODO: add handling for STOP and START commands
+
+
     }.bind(this)
 
     OnionCDK.onCmd = function (command, result) {
-      console.log(command, result)
       switch (command) {
         case '/www/apps/oos-app-webcam/save-token.sh':
           OnionCDK.sendToast('Token Saved')
           break
+        case 'cat':
+          this.token = result || ''
+          break
         default:
           break
-
       }
-    }
+    }.bind(this)
 
     OnionCDK.onInit = function () {
       // check if streaming service is running
       OnionCDK.service('mjpg-streamer', 'list')
+      OnionCDK.service('oos-app-timelapse', 'list')
+      OnionCDK.sendCmd('cat', ['/www/apps/oos-app-webcam/token.txt'])
     }
     OnionCDK.init()
   },
