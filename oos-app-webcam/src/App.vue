@@ -120,7 +120,7 @@ export default {
   },
   mounted () {
     OnionCDK.onService = function (name, command, result) {
-      console.log(name, command, result)
+      // console.log(name, command, result)
       this.isLoading = false
       switch (name) {
         case 'oos-app-timelapse':
@@ -146,8 +146,6 @@ export default {
         default:
           break
       }
-
-
     }.bind(this)
 
     OnionCDK.onCmd = function (command, result) {
