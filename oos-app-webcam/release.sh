@@ -9,3 +9,6 @@ git rm -r ../omega/www/static
 
 cp dist/index.html ../omega/www/
 cp -r dist/static/ ../omega/www/static/
+
+cp app.json ../omega/www/
+cp icon.svg ../omega/www/
