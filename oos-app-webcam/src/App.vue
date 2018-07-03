@@ -21,7 +21,7 @@
       </div> -->
       <div class="card-header">
         <div class="card-title h5">Timelapse {{bTimelapse?'(Recording)':''}}</div>
-        <div class="card-subtitle text-gray">Periodic snapshots will be sent directly to your Dropbox</div>
+        <div class="card-subtitle text-gray">Periodic snapshots will be sent directly to your <strong>Dropbox</strong></div>
 
       </div>
       <div class="card-body">
@@ -32,7 +32,7 @@
           :class="{loading: isLoading}"
           @click="saveToken">Save</button>
         </div>
-        <div class="card-subtitle text-gray"><a>How to get the App Token?</a></div>
+        <div class="card-subtitle text-gray"><a href="https://onion.io/onionos/Timelapse" target="_blank">How do I get an App Token?</a></div>
       </div>
       <div class="card-footer">
         <button class="btn btn-primary btn-block"
