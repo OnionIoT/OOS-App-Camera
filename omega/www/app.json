@@ -1,6 +1,6 @@
 {
-  "id": "oos-app-timelapse",
+  "id": "oos-app-camera",
   "name": "Timelapse Camera",
   "icon": "icon.svg",
-  "description": "Take Snapshot and send them to Dropbox"
+  "description": "Take periodic snapshots and send them to Dropbox"
 }
