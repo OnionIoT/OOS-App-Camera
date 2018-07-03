@@ -1,4 +1,4 @@
-# oos-app-webcam
+# oos-app-camera
 
 > Webcam control and streaming App for OnionOS
 

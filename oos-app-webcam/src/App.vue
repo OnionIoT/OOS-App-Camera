@@ -107,7 +107,7 @@ export default {
     },
     saveToken () {
       this.isLoading = true
-      OnionCDK.sendCmd('/www/apps/oos-app-webcam/save-token.sh', [this.token])
+      OnionCDK.sendCmd('/www/apps/oos-app-camera/save-token.sh', [this.token])
     },
     toggleRecording () {
       this.isLoading = true
@@ -151,7 +151,7 @@ export default {
     OnionCDK.onCmd = function (command, result) {
       this.isLoading = false
       switch (command) {
-        case '/www/apps/oos-app-webcam/save-token.sh':
+        case '/www/apps/oos-app-camera/save-token.sh':
           OnionCDK.sendToast('Token Saved')
           break
         case 'cat':
@@ -166,7 +166,7 @@ export default {
       // check if streaming service is running
       OnionCDK.service('mjpg-streamer', 'list')
       OnionCDK.service('oos-app-timelapse', 'list')
-      OnionCDK.sendCmd('cat', ['/www/apps/oos-app-webcam/token.txt'])
+      OnionCDK.sendCmd('cat', ['/www/apps/oos-app-camera/token.txt'])
     }
     OnionCDK.init()
   },

@@ -3,7 +3,7 @@
 
 #DATE=`date +"%Y-%m-%d_%H%M%S"`
 DATE=`date +"%s"`
-TOKEN=`cat /www/apps/oos-app-webcam/token.txt`
+TOKEN=`cat /www/apps/oos-app-camera/token.txt`
 
 
 FNAME=$DATE.jpg

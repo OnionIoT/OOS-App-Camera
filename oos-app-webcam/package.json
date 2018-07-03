@@ -1,5 +1,5 @@
 {
-  "name": "oos-app-webcam",
+  "name": "oos-app-camera",
   "version": "1.0.0",
   "description": "Webcam control and streaming App for OnionOS",
   "author": "Lazar Demin <lazar@onion.io>",
