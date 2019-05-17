@@ -3,7 +3,7 @@
 START=60
 
 USE_PROCD=1
-BIN="/www/apps/oos-app-camera/run.sh"
+BIN="/www/apps/oos-app-timelapse-camera/run.sh"
 OPT=""
 
 start_service() {

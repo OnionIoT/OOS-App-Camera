@@ -1,4 +1,4 @@
-# oos-app-camera
+# oos-app-timelapse-camera
 
 > Webcam control and streaming App for OnionOS
 
